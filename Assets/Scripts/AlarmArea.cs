@@ -2,24 +2,21 @@ using UnityEngine;
 
 public class AlarmArea : MonoBehaviour
 {
-    private const float _ActiveVolumeAmount = 1;
-    private const float _InactiveVolumeAmount = 0;
-
     [SerializeField] private AlarmSound sound;
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.GetComponent<Mover>() != null)
+        if (other.gameObject.TryGetComponent(out Mover mover))
         {
-            sound.SetTargetVolume(_ActiveVolumeAmount);
+            sound.SetAlarmOn();
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.GetComponent<Mover>() != null)
+        if (other.gameObject.TryGetComponent(out Mover mover))
         {
-            sound.SetTargetVolume(_InactiveVolumeAmount);
+            sound.SetAlarmOff();
         }
     }
 }
